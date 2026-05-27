@@ -7,6 +7,8 @@ import com.octaviookumu.tasks.services.TaskListService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/task-lists")
@@ -33,5 +35,11 @@ public class TaskListController {
                 taskListMapper.fromDto(taskListDto)
         );
         return taskListMapper.toDto(taskList);
+    }
+
+    @GetMapping("/{task_list_id}")
+    public Optional<TaskListDto> getTaskList(@PathVariable UUID taskListId) {
+        return taskListService.getTaskList(taskListId)
+                .map(taskListMapper::toDto);
     }
 }

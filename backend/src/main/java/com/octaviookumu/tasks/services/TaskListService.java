@@ -3,9 +3,13 @@ package com.octaviookumu.tasks.services;
 import com.octaviookumu.tasks.domain.entities.TaskList;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface TaskListService {
     List<TaskList> taskLists();
 
     TaskList createTaskList(TaskList taskList);
+
+    Optional<TaskList> getTaskList(UUID id);
 }
