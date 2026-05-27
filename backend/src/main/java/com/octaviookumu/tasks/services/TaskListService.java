@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TaskListService {
     List<TaskList> taskLists();
+
+    TaskList createTaskList(TaskList taskList);
 }
