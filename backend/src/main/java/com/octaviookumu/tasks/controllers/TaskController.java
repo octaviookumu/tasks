@@ -1,12 +1,10 @@
 package com.octaviookumu.tasks.controllers;
 
 import com.octaviookumu.tasks.domain.dto.TaskDto;
+import com.octaviookumu.tasks.domain.entities.Task;
 import com.octaviookumu.tasks.mappers.TaskMapper;
 import com.octaviookumu.tasks.services.TaskService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +27,16 @@ public class TaskController {
                 .stream()
                 .map(taskMapper::toDto)
                 .toList();
+    }
+
+    @PostMapping
+    public TaskDto createTask(
+            @PathVariable("task_list_id") UUID taskListId,
+            @RequestBody TaskDto taskDto
+    ) {
+        Task taskToCreate = taskService.createTask(taskListId, taskMapper.fromDto(taskDto));
+        return taskMapper.toDto(taskToCreate);
+
     }
 
 }
