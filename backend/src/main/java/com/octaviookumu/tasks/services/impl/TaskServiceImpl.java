@@ -7,6 +7,7 @@ import com.octaviookumu.tasks.domain.entities.TaskStatus;
 import com.octaviookumu.tasks.repositories.TaskListRepository;
 import com.octaviookumu.tasks.repositories.TaskRepository;
 import com.octaviookumu.tasks.services.TaskService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListId(taskListId);
     }
 
+    @Transactional
     @Override
     public Task createTask(UUID taskListId, Task task) {
         if (task.getId() != null) {
@@ -71,6 +73,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findByTaskListIdAndId(taskListId, taskId);
     }
 
+    @Transactional
     @Override
     public Task updateTask(UUID taskListId, UUID taskId, Task task) {
         if (task.getId() == null) {
@@ -99,6 +102,7 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.save(existingTask);
     }
 
+    @Transactional // maintains db consistency even if errors occur during deletion
     @Override
     public void deleteTask(UUID taskListId, UUID taskId) {
         taskRepository.deleteByTaskListIdAndId(taskListId, taskId);
